@@ -8,7 +8,7 @@ Faites attention à choisir la bonne version du jdk pour l'ajouter dans PATH /!\
 
 Une fois avoir téléchargé le code source (en .zip) et l'avoir dézippé dans votre Bureau, se rendre dans l'invite de commandes, placez vous dans le dossier téléchargé (normalement nommé "ejiketmat-master" par défaut) via la commande "cd".
 
-Une fois dans "ejiketmat-master\WS_Echec\src>" saisissez les commandes suivantes: (en italique)
+Une fois dans "src>" saisissez les commandes suivantes: (en italique)
 
 *mkdir ..\bin*
 
