@@ -1,7 +1,7 @@
 package echec;
 
 public class Portee {
-	private final int PORTEEMAXIMALE=27; //Taille maximale uniquement pour de l'optimatisation de mémoire...
+	private final int PORTEEMAXIMALE=27; //Taille maximale uniquement pour de l'optimatisation de mï¿½moire...
 	private Case[] cases;	//Cavalier 8maximum //Tour 14maximum //Fou 13maximum //Pion 4maximum //Reine 27maximum //Roi 8maximum 
 	private int nbrCases=0;
 	
@@ -28,7 +28,7 @@ public class Portee {
 		cases=new Case[PORTEEMAXIMALE];
 	}
 	
-	//ajoute la case en paramètre dans le tableau de case de la portée
+	//ajoute la case en paramï¿½tre dans le tableau de case de la portï¿½e
 	public void ajouterPortee(Case c) {
 		if (nbrCases<PORTEEMAXIMALE) {
 			cases[nbrCases]=c;
@@ -38,6 +38,7 @@ public class Portee {
 	
 
 	
+	@Override
 	public String toString() {
 		String chaine="Portee {";
 		for (int i=0; i<nbrCases;i++){

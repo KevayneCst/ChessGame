@@ -1,6 +1,8 @@
 package echec;
 
 public class Couleur {
+	public static final String BLANC = "blanc";
+	public static final String NOIR = "noir";
 	private String couleur;
 	
 	public Couleur(String s) {
@@ -21,7 +23,7 @@ public class Couleur {
 
 	//-------La couleur est bien "noir" ou "blanc"-------
 	public static boolean CouleurValide(String s) {			//On veut s'assurer que la couleur n'est pas autre chose que du blanc ou du noir
-		if ((s.equals("blanc")) || (s.equals("noir"))) {  //Si une couleur est "blanc" OU "noir", alors on retourne true, sinon false.
+		if ((s.equals(BLANC)) || (s.equals(NOIR))) {  //Si une couleur est "blanc" OU "noir", alors on retourne true, sinon false.
 			return true;
 		}
 		return false;
@@ -42,12 +44,12 @@ public class Couleur {
 		}
 	}
 	
-	//-inverse la couleur de "noir" à "blanc" ou de "blanc" à "noir"-
+	//inverse la couleur de "noir" Ã  "blanc" ou de "blanc" Ã  "noir"
 	public Couleur invertionCouleur() {
-		if (this.equals(new Couleur("blanc"))) {
-			return new Couleur("noir");
+		if (this.equals(new Couleur(BLANC))) {
+			return new Couleur(NOIR);
 		} else {
-			return new Couleur("blanc");
+			return new Couleur(BLANC);
 		}
 	}
 	

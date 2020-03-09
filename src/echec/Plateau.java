@@ -6,22 +6,23 @@ import java.io.InputStreamReader;
 
 public class Plateau {
 	
-	private final int maximum=8; //Nombre pratique pour créer des tableaux
-	private Case[][] plateau; //Matrice de case (qui correspond à l'échiquier)
-	private int nbrPieceRestantes=32; //Nombre de pièces sur le plateau, instancié à 32 et recalculé à chaque fois que l'on get cet attribut
-	private Piece[] cimetiereBlanc; //Là on l'on range les pièces blanches mangée par les Noir
-	private Piece[] cimetiereNoir; //Là on l'on range les pièces noires mangée par les Blanc
+	private final int maximum=8; //Nombre pratique pour crï¿½er des tableaux
+	private Case[][] plateau; //Matrice de case (qui correspond ï¿½ l'ï¿½chiquier)
+	private int nbrPieceRestantes=32; //Nombre de piï¿½ces sur le plateau, instanciï¿½ ï¿½ 32 et recalculï¿½ ï¿½ chaque fois que l'on get cet attribut
+	private Piece[] cimetiereBlanc; //Lï¿½ on l'on range les piï¿½ces blanches mangï¿½e par les Noir
+	private Piece[] cimetiereNoir; //Lï¿½ on l'on range les piï¿½ces noires mangï¿½e par les Blanc
 	
 	public Plateau() {
-		plateau = new Case[maximum][maximum]; //L'échiquier fait une taille de 8 par 8
-		cimetiereBlanc = new Piece[2*maximum]; //Au maximum on aura dans le tableau 16 pieces d'une même couleur (techniquement 15 puisque le roi ne rentrera jamais dedans)
-		cimetiereNoir = new Piece[2*maximum]; //Au maximum on aura dans le tableau 16 pieces d'une même couleur (techniquement 15 puisque le roi ne rentrera jamais dedans)
-		creerPlateau(); //On appelle la fonctionne qui va remplir toute la matrice de cases (avec la bonne couleur de cases et leur coordonnées etc)
-		remplirPlateau(); //On appelle la fonction qui permet de mettre sur chaque case de l'échiquier la pièce qu'il faut, conformément aux règles du jeu d'échec
+		plateau = new Case[maximum][maximum]; //L'ï¿½chiquier fait une taille de 8 par 8
+		cimetiereBlanc = new Piece[2*maximum]; //Au maximum on aura dans le tableau 16 pieces d'une mï¿½me couleur (techniquement 15 puisque le roi ne rentrera jamais dedans)
+		cimetiereNoir = new Piece[2*maximum]; //Au maximum on aura dans le tableau 16 pieces d'une mï¿½me couleur (techniquement 15 puisque le roi ne rentrera jamais dedans)
+		creerPlateau(); //On appelle la fonctionne qui va remplir toute la matrice de cases (avec la bonne couleur de cases et leur coordonnï¿½es etc)
+		remplirPlateau(); //On appelle la fonction qui permet de mettre sur chaque case de l'ï¿½chiquier la piï¿½ce qu'il faut, conformï¿½ment aux rï¿½gles du jeu d'ï¿½chec
 		
 	}
 	
-	public Plateau clone() { //Méthode pour copier un type Plateau (utile pour tout nos tests de simulation de déplacement)
+	@Override
+	public Plateau clone() { //Mï¿½thode pour copier un type Plateau (utile pour tout nos tests de simulation de dï¿½placement)
 		
 		Plateau leClone = new Plateau();
 		for (int i=0; i<8; i++) {
@@ -42,7 +43,7 @@ public class Plateau {
 		this.nbrPieceRestantes = nbrPieceRestantes;
 	}
 
-	public int getNbrPieceRestantes() { //Méthode get un peu modifiée, qui va recalculer (en regardant le nombre de pièce présente sur l'échiquier) le nombre de pièces restantes
+	public int getNbrPieceRestantes() { //Mï¿½thode get un peu modifiï¿½e, qui va recalculer (en regardant le nombre de piï¿½ce prï¿½sente sur l'ï¿½chiquier) le nombre de piï¿½ces restantes
 		int nbrPieces=0;
 		for (int i=0; i<8; i++) {
 			for (int j=0; j<8; j++) {
@@ -66,27 +67,27 @@ public class Plateau {
 		this.cimetiereNoir = cimetiereNoir;
 	}
 
-	public void creerPlateau() { //Méthode pour associé, à chaque coordonnées de la matrice de cases, des cases que l'on instancie
+	public void creerPlateau() { //Mï¿½thode pour associï¿½, ï¿½ chaque coordonnï¿½es de la matrice de cases, des cases que l'on instancie
 		
 		boolean alternanceCouleur = true;
 		
 		for(int i=0; i<8; i++) { //Les i c'est la COLONNE
 			alternanceCouleur = true;
 			
-			if (i%2==0 ) { //Dès que le numero de ligne est pair on inverse variable alternanceCouleur
+			if (i%2==0 ) { //Dï¿½s que le numero de ligne est pair on inverse variable alternanceCouleur
 				alternanceCouleur = false;
 			}
 			
 			for(int j=0; j<8;j++) { //Les j c'est la LIGNE
 				
-				if (alternanceCouleur == false) { //Quand alternanceCouleur==false on va créer des cases de couleur noir
+				if (alternanceCouleur == false) { //Quand alternanceCouleur==false on va crï¿½er des cases de couleur noir
 					
 					
 					plateau[i][j] = new Case (i+1,j+1,"noir");
 					//System.out.println("["+(i+1)+"]["+(j+1)+"]"+plateau[i][j].getCouleurCase());
 					alternanceCouleur = true;
 					
-				} else { //Quand alternanceCouleur n'est pas égal à false (donc ==true) on va créer des cases de couleur noir
+				} else { //Quand alternanceCouleur n'est pas ï¿½gal ï¿½ false (donc ==true) on va crï¿½er des cases de couleur noir
 					
 					plateau[i][j] = new Case (i+1,j+1,"blanc");
 					//System.out.println("["+(i+1)+"]["+(j+1)+"]"+plateau[i][j].getCouleurCase());
@@ -99,148 +100,148 @@ public class Plateau {
 	public void remplirPlateau() {
 		
 		/**
-		 * Méthode qui va
+		 * Mï¿½thode qui va
 		 * remplir le plateau
-		 * de toutes les pièces
+		 * de toutes les piï¿½ces
 		 * qu'il faut pour pouvoir
-		 * commencer à jouer.
+		 * commencer ï¿½ jouer.
 		 * 
-		 * A chaque fois on va mettre la pièce créer dans la case (au bonnes coordonnées)
-		 * ET on va associé à la pièce la case sur laquelle elle est.
+		 * A chaque fois on va mettre la piï¿½ce crï¿½er dans la case (au bonnes coordonnï¿½es)
+		 * ET on va associï¿½ ï¿½ la piï¿½ce la case sur laquelle elle est.
 		 */
 
-		//-----------Création des pièces de couleur blanche--------------
+		//-----------Crï¿½ation des piï¿½ces de couleur blanche--------------
 		
-		Tour a1 = new Tour("blanc");
+		Tour a1 = new Tour(Couleur.BLANC);
 		plateau[0][0].setPieceDansCase(a1);
 		a1.setLaCaseDeLaPiece(plateau[0][0]);
 		
-		Cavalier b1 = new Cavalier("blanc");
+		Cavalier b1 = new Cavalier(Couleur.BLANC);
 		plateau[1][0].setPieceDansCase(b1);
 		b1.setLaCaseDeLaPiece(plateau[1][0]);
 		
-		Fou c1 = new Fou("blanc");
+		Fou c1 = new Fou(Couleur.BLANC);
 		plateau[2][0].setPieceDansCase(c1);
 		c1.setLaCaseDeLaPiece(plateau[2][0]);
 		
-		Reine d1 = new Reine("blanc");
+		Reine d1 = new Reine(Couleur.BLANC);
 		plateau[3][0].setPieceDansCase(d1);
 		d1.setLaCaseDeLaPiece(plateau[3][0]);
 		
-		Roi e1 = new Roi("blanc");
+		Roi e1 = new Roi(Couleur.BLANC);
 		plateau[4][0].setPieceDansCase(e1);
 		e1.setLaCaseDeLaPiece(plateau[4][0]);
 		
-		Fou f1 = new Fou("blanc");
+		Fou f1 = new Fou(Couleur.BLANC);
 		plateau[5][0].setPieceDansCase(f1);
 		f1.setLaCaseDeLaPiece(plateau[5][0]);
 		
-		Cavalier g1 = new Cavalier("blanc");
+		Cavalier g1 = new Cavalier(Couleur.BLANC);
 		plateau[6][0].setPieceDansCase(g1);
 		g1.setLaCaseDeLaPiece(plateau[6][0]);
 		
-		Tour h1 = new Tour("blanc");
+		Tour h1 = new Tour(Couleur.BLANC);
 		plateau[7][0].setPieceDansCase(h1);
 		h1.setLaCaseDeLaPiece(plateau[7][0]);
 		
 		
-		Pion a2 = new Pion("blanc");
+		Pion a2 = new Pion(Couleur.BLANC);
 		plateau[0][1].setPieceDansCase(a2);
 		a2.setLaCaseDeLaPiece(plateau[0][1]);
 		
-		Pion b2 = new Pion("blanc");
+		Pion b2 = new Pion(Couleur.BLANC);
 		plateau[1][1].setPieceDansCase(b2);
 		b2.setLaCaseDeLaPiece(plateau[1][1]);
 		
-		Pion c2 = new Pion("blanc");
+		Pion c2 = new Pion(Couleur.BLANC);
 		plateau[2][1].setPieceDansCase(c2);
 		c2.setLaCaseDeLaPiece(plateau[2][1]);
 		
-		Pion d2 = new Pion("blanc");
+		Pion d2 = new Pion(Couleur.BLANC);
 		plateau[3][1].setPieceDansCase(d2);
 		d2.setLaCaseDeLaPiece(plateau[3][1]);
 		
-		Pion e2 = new Pion("blanc");
+		Pion e2 = new Pion(Couleur.BLANC);
 		plateau[4][1].setPieceDansCase(e2);
 		e2.setLaCaseDeLaPiece(plateau[4][1]);
 		
-		Pion f2 = new Pion("blanc");
+		Pion f2 = new Pion(Couleur.BLANC);
 		plateau[5][1].setPieceDansCase(f2);
 		f2.setLaCaseDeLaPiece(plateau[5][1]);
 		
-		Pion g2 = new Pion("blanc");
+		Pion g2 = new Pion(Couleur.BLANC);
 		plateau[6][1].setPieceDansCase(g2);
 		g2.setLaCaseDeLaPiece(plateau[6][1]);
 		
-		Pion h2 = new Pion("blanc");
+		Pion h2 = new Pion(Couleur.BLANC);
 		plateau[7][1].setPieceDansCase(h2);
 		h2.setLaCaseDeLaPiece(plateau[7][1]);
 		
-		//-----------Création des pièces de couleur noir--------------
+		//-----------Crï¿½ation des piï¿½ces de couleur noir--------------
 		
-		Tour a8 = new Tour("noir");
+		Tour a8 = new Tour(Couleur.NOIR);
 		plateau[0][7].setPieceDansCase(a8);
 		a8.setLaCaseDeLaPiece(plateau[0][7]);
 		
-		Cavalier b8 = new Cavalier("noir");
+		Cavalier b8 = new Cavalier(Couleur.NOIR);
 		plateau[1][7].setPieceDansCase(b8);
 		b8.setLaCaseDeLaPiece(plateau[1][7]);
 		
-		Fou c8 = new Fou("noir");
+		Fou c8 = new Fou(Couleur.NOIR);
 		plateau[2][7].setPieceDansCase(c8);
 		c8.setLaCaseDeLaPiece(plateau[2][7]);
 		
-		Reine d8 = new Reine("noir");
+		Reine d8 = new Reine(Couleur.NOIR);
 		plateau[3][7].setPieceDansCase(d8);
 		d8.setLaCaseDeLaPiece(plateau[3][7]);
 		
 		
-		Roi e8 = new Roi("noir");
+		Roi e8 = new Roi(Couleur.NOIR);
 		plateau[4][7].setPieceDansCase(e8);
 		e8.setLaCaseDeLaPiece(plateau[4][7]);
 		
-		Fou f8 = new Fou("noir");
+		Fou f8 = new Fou(Couleur.NOIR);
 		plateau[5][7].setPieceDansCase(f8);
 		f8.setLaCaseDeLaPiece(plateau[5][7]);
 		
-		Cavalier g8 = new Cavalier("noir");
+		Cavalier g8 = new Cavalier(Couleur.NOIR);
 		plateau[6][7].setPieceDansCase(g8);
 		g8.setLaCaseDeLaPiece(plateau[6][7]);
 		
-		Tour h8 = new Tour("noir");
+		Tour h8 = new Tour(Couleur.NOIR);
 		plateau[7][7].setPieceDansCase(h8);
 		h8.setLaCaseDeLaPiece(plateau[7][7]);
 		
 		
-		Pion a7 = new Pion("noir");
+		Pion a7 = new Pion(Couleur.NOIR);
 		plateau[0][6].setPieceDansCase(a7);
 		a7.setLaCaseDeLaPiece(plateau[0][6]);
 
-		Pion b7 = new Pion("noir");
+		Pion b7 = new Pion(Couleur.NOIR);
 		plateau[1][6].setPieceDansCase(b7);
 		b7.setLaCaseDeLaPiece(plateau[1][6]);
 		
-		Pion c7 = new Pion("noir");
+		Pion c7 = new Pion(Couleur.NOIR);
 		plateau[2][6].setPieceDansCase(c7);
 		c7.setLaCaseDeLaPiece(plateau[2][6]);
 		
-		Pion d7 = new Pion("noir");
+		Pion d7 = new Pion(Couleur.NOIR);
 		plateau[3][6].setPieceDansCase(d7);
 		d7.setLaCaseDeLaPiece(plateau[3][6]);
 		
-		Pion e7 = new Pion("noir");
+		Pion e7 = new Pion(Couleur.NOIR);
 		plateau[4][6].setPieceDansCase(e7);
 		e7.setLaCaseDeLaPiece(plateau[4][6]);
 		
-		Pion f7 = new Pion("noir");
+		Pion f7 = new Pion(Couleur.NOIR);
 		plateau[5][6].setPieceDansCase(f7);
 		f7.setLaCaseDeLaPiece(plateau[5][6]);
 		
-		Pion g7 = new Pion("noir");
+		Pion g7 = new Pion(Couleur.NOIR);
 		plateau[6][6].setPieceDansCase(g7);
 		g7.setLaCaseDeLaPiece(plateau[6][6]);
 		
-		Pion h7 = new Pion("noir");
+		Pion h7 = new Pion(Couleur.NOIR);
 		plateau[7][6].setPieceDansCase(h7);
 		h7.setLaCaseDeLaPiece(plateau[7][6]);
 		
@@ -258,13 +259,13 @@ public class Plateau {
 		return cimetiereNoir;
 	}
 
-	public boolean estLibre(int Xcolonne, int Yligne) { //Méthode pour vérifier, si aux coordonnés en paramètre, la case contient une pièce ou pas
+	public boolean estLibre(int Xcolonne, int Yligne) { //Mï¿½thode pour vï¿½rifier, si aux coordonnï¿½s en paramï¿½tre, la case contient une piï¿½ce ou pas
 		
 		Piece pieceReference = this.plateau[Xcolonne-1][Yligne-1].getPiece();
 		if (pieceReference==null) { //Ici obligation de mettre un == et pas un equals pour comparer avec un null
 			return true; //Oui elle est libre
 		} else {
-			return false; //Non il y a une pièce sur la case
+			return false; //Non il y a une piï¿½ce sur la case
 		}
 	}
 	
@@ -273,14 +274,14 @@ public class Plateau {
 	}
 	
 	public void setCimetiere(Couleur c, Piece p) {
-		if (c.getCouleur().equals("blanc")) {
+		if (c.getCouleur().equals(Couleur.BLANC)) {
 			cimetiereBlanc[16-restePiecesBlanches()]=p;
-		} else if (c.getCouleur().equals("noir")) {
+		} else if (c.getCouleur().equals(Couleur.NOIR)) {
 			cimetiereNoir[16-restePiecesNoires()]=p;
 		}
 	}
 	
-	public void reinitialiserPions(Couleur c) { //Pour réinitialiser pour chaque Pion l'attribut "aiJeAvanceeDeDeux"
+	public void reinitialiserPions(Couleur c) { //Pour rï¿½initialiser pour chaque Pion l'attribut "aiJeAvanceeDeDeux"
 		for (int i=0; i<8; i++) {
 			for (int j=0; j<8; j++) {
 				if (this.plateau[i][j].getPiece()!=null) {
@@ -323,7 +324,7 @@ public class Plateau {
 	}
 	
 	
-	public void actualiserPortees() { //Méthode qui va recalculer les Portee de toutes les pièces de l'échiquier
+	public void actualiserPortees() { //Mï¿½thode qui va recalculer les Portee de toutes les piï¿½ces de l'ï¿½chiquier
 		Piece[] toutesPieces = new Piece[32];
 		int indiceDuTableau=0;
 		
@@ -339,7 +340,7 @@ public class Plateau {
 		}
 		
 		for (int i=0; i<indiceDuTableau; i++) {
-			//System.out.println("Je calcule la portée de "+toutesPieces[i].getRepresentation()+" de couleur"+toutesPieces[i].getCouleurPiece());
+			//System.out.println("Je calcule la portï¿½e de "+toutesPieces[i].getRepresentation()+" de couleur"+toutesPieces[i].getCouleurPiece());
 			toutesPieces[i].calculerPortee(this);	
 		}
 	}
@@ -368,7 +369,7 @@ public class Plateau {
 		}
 	}
 	
-	public void afficherPlateau() { //Méthode qui va afficher directement (dès que l'on appelle la fonction) l'état de l'échiquier en regardant les pièces sur les cases de l'échiquier si il y en a
+	public void afficherPlateau() { //Mï¿½thode qui va afficher directement (dï¿½s que l'on appelle la fonction) l'ï¿½tat de l'ï¿½chiquier en regardant les piï¿½ces sur les cases de l'ï¿½chiquier si il y en a
 		int k=8, asciiValue=97;
 		String lePlateau="";
 		
@@ -378,13 +379,13 @@ public class Plateau {
 				
 				if (this.getCaseAtCoordo(j, i).getPiece()==null) { //SI LA CASE NE CONTIENT PAS DE PIECE
 					
-					lePlateau+="..  "; //Remplacer le caractère par celui choisit pour représenter une case VIDE
+					lePlateau+="..  "; //Remplacer le caractï¿½re par celui choisit pour reprï¿½senter une case VIDE
 					
 				} else { //SI LA CASE CONTIENT UNE PIECE
 					if ((this.getCaseAtCoordo(j, i)).getPiece().getCouleurPiece().equals(new Couleur("blanc"))) {
-						lePlateau+=this.getCaseAtCoordo(j, i).getPiece().getRepresentation()+"b  "; //On utilise le caractère qu'on a attributé aux pièces pour l'afficher sur le plateau
+						lePlateau+=this.getCaseAtCoordo(j, i).getPiece().getRepresentation()+"b  "; //On utilise le caractï¿½re qu'on a attributï¿½ aux piï¿½ces pour l'afficher sur le plateau
 					} else {
-						lePlateau+=this.getCaseAtCoordo(j, i).getPiece().getRepresentation()+"n  "; //On utilise le caractère qu'on a attributé aux pièces pour l'afficher sur le plateau
+						lePlateau+=this.getCaseAtCoordo(j, i).getPiece().getRepresentation()+"n  "; //On utilise le caractï¿½re qu'on a attributï¿½ aux piï¿½ces pour l'afficher sur le plateau
 					}
 				}	
 			}
@@ -393,19 +394,18 @@ public class Plateau {
 		}
 		lePlateau+="\n    ";
 		for (int j=1;j<9;j++) {
-			lePlateau+=(char)asciiValue+"   "; //Avec '(char)' suivi d'un int, on va obtenir le caractère ASCII associé au nombre. (65=A, 66=B etc...)
+			lePlateau+=(char)asciiValue+"   "; //Avec '(char)' suivi d'un int, on va obtenir le caractï¿½re ASCII associï¿½ au nombre. (65=A, 66=B etc...)
 			asciiValue++;
 		}
 		System.out.println(lePlateau+"\n");
 	}
 	
-	public Roi findTheKing(Couleur c) { //Trouve le roi de la couleur passé en paramètre #Cersei
+	public Roi findTheKing(Couleur c) { //Trouve le roi de la couleur passï¿½ en paramï¿½tre #Cersei
 		for (int i=0; i<8; i++) {
 			for (int j=0;j<8;j++) {
 				if (plateau[i][j].getPiece()!=null) {
 					if ((plateau[i][j].getPiece().getRepresentation()=='K') && (plateau[i][j].getPiece().getCouleurPiece().equals(c))) {
-						Roi theKing = (Roi)plateau[i][j].getPiece();
-						return theKing;
+						return (Roi)plateau[i][j].getPiece();
 					}
 				}	
 			}
@@ -417,10 +417,10 @@ public class Plateau {
 	public String choisirPromotion() { 
 		
 		/**
-		 * L'utilisateur va être invité à saisir en quel nouvelle pièce le pion va-t-il se promouvoir,
-		 * et la méthode, une fois la saisie valide, va retourner le caractère 
-		 * (ici j'ai délibérément choisi de retourner un type String au lieu d'un char)
-		 * de la pièce que l'on a saisi.
+		 * L'utilisateur va ï¿½tre invitï¿½ ï¿½ saisir en quel nouvelle piï¿½ce le pion va-t-il se promouvoir,
+		 * et la mï¿½thode, une fois la saisie valide, va retourner le caractï¿½re 
+		 * (ici j'ai dï¿½libï¿½rï¿½ment choisi de retourner un type String au lieu d'un char)
+		 * de la piï¿½ce que l'on a saisi.
 		 */
 		
 		
@@ -464,25 +464,25 @@ public class Plateau {
 	public void saisirDeplacement(Couleur c) {
 		
 		/**
-		 * Méthode écrite par Kévin
+		 * Mï¿½thode ï¿½crite par Kï¿½vin
 		 * 
 		 * 
-		 * Dans cette méthode (malheuresement trop longue à mon goût) je m'occupe des choses suivantes:
+		 * Dans cette mï¿½thode (malheuresement trop longue ï¿½ mon goï¿½t) je m'occupe des choses suivantes:
 		 * 
-		 * -Saisie et vérification des informations saisies au clavier (pour le déplacement)
-		 * -Vérification que le déplacement saisi de met pas en échec son propre Roi (dans ce cas ressaisir)
-		 * -Vérification que le déplacement saisi ne correspond pas à un roque
-		 * -Vérification que le déplacement saisi permette de sortir de la situation d'échec de son Roi (uniquement si le Roi est en échec évidemment)
+		 * -Saisie et vï¿½rification des informations saisies au clavier (pour le dï¿½placement)
+		 * -Vï¿½rification que le dï¿½placement saisi de met pas en ï¿½chec son propre Roi (dans ce cas ressaisir)
+		 * -Vï¿½rification que le dï¿½placement saisi ne correspond pas ï¿½ un roque
+		 * -Vï¿½rification que le dï¿½placement saisi permette de sortir de la situation d'ï¿½chec de son Roi (uniquement si le Roi est en ï¿½chec ï¿½videmment)
 		 * 
-		 * Pour ce qui est de l'échec et mat / pat, cette vérification ce fait avant de rentrer dans cette méthode donc cela veut dire que
-		 * si le système accède à cette méthode, c'est qu'il y a forcément une solution à une situation d'échec, ou forcément un coup à jouer légal.
+		 * Pour ce qui est de l'ï¿½chec et mat / pat, cette vï¿½rification ce fait avant de rentrer dans cette mï¿½thode donc cela veut dire que
+		 * si le systï¿½me accï¿½de ï¿½ cette mï¿½thode, c'est qu'il y a forcï¿½ment une solution ï¿½ une situation d'ï¿½chec, ou forcï¿½ment un coup ï¿½ jouer lï¿½gal.
 		 * 
-		 * J'ai essayé de compartimenté le code en 3 sections, en espérant que le tout reste compréhensible.
+		 * J'ai essayï¿½ de compartimentï¿½ le code en 3 sections, en espï¿½rant que le tout reste comprï¿½hensible.
 		 * 
 		 */
 		
 		
-		//---------------------Saisie et vérification des informations saisies au clavier---------------------
+		//---------------------Saisie et vï¿½rification des informations saisies au clavier---------------------
 		
 		int coordoXDepart=0;
 		int coordoYDepart=0;
@@ -492,13 +492,13 @@ public class Plateau {
 		System.out.println("~-~-~-~-~ Tour du joueur "+c.getCouleur()+" ~-~-~-~-~\n");
 		boolean hasMove=false;
 		
-		String expReguliereLettreUn ="[a-h]"; //Expression régulières qui détecte si c'est une lettre minuscule entre a et h (donc a, b, c, d, e, f, g, h)
-		String expReguliereLettreDeux ="[A-H]"; //Expression régulières qui détecte si c'est une lettre minuscule entre A et H (donc A, B, C, D, E, F, G, H)
-		String expReguliereChiffre ="[1-8]"; //Expression régulières qui détecte si c'est un chiffre compris entre 1 et 8 (donc 1, 2, 3, 4, 5, 6, 7, 8)
+		String expReguliereLettreUn ="[a-h]"; //Expression rï¿½guliï¿½res qui dï¿½tecte si c'est une lettre minuscule entre a et h (donc a, b, c, d, e, f, g, h)
+		String expReguliereLettreDeux ="[A-H]"; //Expression rï¿½guliï¿½res qui dï¿½tecte si c'est une lettre minuscule entre A et H (donc A, B, C, D, E, F, G, H)
+		String expReguliereChiffre ="[1-8]"; //Expression rï¿½guliï¿½res qui dï¿½tecte si c'est un chiffre compris entre 1 et 8 (donc 1, 2, 3, 4, 5, 6, 7, 8)
 		
-		while (hasMove==false) { //Est-ce qu'au final, le déplacement a eu lieu ? Si non, on oblige le joueur à ressaisir un déplacement tant que le déplacement n'aura pas été effectué
-			boolean depart=false; //Variable que j'utilise pour saisir les coordonnées de départ tant qu'on a pas une saisie valide
-			boolean arrivee=false; //Variable que j'utilise pour saisir les coordonnées d'arrivée tant qu'on a pas une saisie valide
+		while (hasMove==false) { //Est-ce qu'au final, le dï¿½placement a eu lieu ? Si non, on oblige le joueur ï¿½ ressaisir un dï¿½placement tant que le dï¿½placement n'aura pas ï¿½tï¿½ effectuï¿½
+			boolean depart=false; //Variable que j'utilise pour saisir les coordonnï¿½es de dï¿½part tant qu'on a pas une saisie valide
+			boolean arrivee=false; //Variable que j'utilise pour saisir les coordonnï¿½es d'arrivï¿½e tant qu'on a pas une saisie valide
 			
 			this.afficherPlateau();
 			
@@ -506,10 +506,10 @@ public class Plateau {
 				while (depart==false) {
 					
 					if (this.findTheKing(c).enEchec(this)) {
-						System.out.println("Votre Roi est en échec !");
+						System.out.println("Votre Roi est en ï¿½chec !");
 					}
 					
-					System.out.println("\nDépart: Veuillez saisir les coordonnées de la pièce à deplacer:");
+					System.out.println("\nDï¿½part: Veuillez saisir les coordonnï¿½es de la piï¿½ce ï¿½ deplacer:");
 					BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 					String caseDepart = bufferRead.readLine();
 					if (caseDepart.length()==2) {
@@ -550,29 +550,29 @@ public class Plateau {
 									break;
 								}
 								coordoYDepart=Integer.valueOf(deuxieme);
-								if (plateau[coordoXDepart-1][coordoYDepart-1].getPiece()!=null) { //Si la case de départ contient bien une pièce
-									if (plateau[coordoXDepart-1][coordoYDepart-1].getPiece().getCouleurPiece().equals(c)) { //Si la pièce sur la case de départ est bien une pièce d'une autre couleur que celle du joueur qui joue
+								if (plateau[coordoXDepart-1][coordoYDepart-1].getPiece()!=null) { //Si la case de dï¿½part contient bien une piï¿½ce
+									if (plateau[coordoXDepart-1][coordoYDepart-1].getPiece().getCouleurPiece().equals(c)) { //Si la piï¿½ce sur la case de dï¿½part est bien une piï¿½ce d'une autre couleur que celle du joueur qui joue
 										depart=true;
 									} else {
-										System.out.println("Vous ne pouvez pas déplacer une pièce de votre adversaire !\n");
+										System.out.println("Vous ne pouvez pas dï¿½placer une piï¿½ce de votre adversaire !\n");
 									}
 								} else {
-									System.out.println("Il n'y a aucune pièce sur cette case !\n");
+									System.out.println("Il n'y a aucune piï¿½ce sur cette case !\n");
 								}
 							} else {
 								System.out.println("La lettre de la colonne saisie ne se situe pas entre 'a' et 'h'\n");
 							}	
 						} else {
-							System.out.println("Le numéro de ligne saisi ne se situe pas entre 1 et 8\n");
+							System.out.println("Le numï¿½ro de ligne saisi ne se situe pas entre 1 et 8\n");
 						}
 					} else {
-						System.out.println("Votre saisie ne contient pas 2 caractères\n");
+						System.out.println("Votre saisie ne contient pas 2 caractï¿½res\n");
 					}
 				}
 				
 				while (arrivee==false) {
 					
-					System.out.println("\nDestination: Veuillez saisir les coordonnées de la case de destination:");
+					System.out.println("\nDestination: Veuillez saisir les coordonnï¿½es de la case de destination:");
 					BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 					String caseArrivee = bufferRead.readLine();
 					if (caseArrivee.length()==2) {
@@ -618,10 +618,10 @@ public class Plateau {
 								System.out.println("La lettre de la colonne saisie ne se situe pas entre 'a' et 'h'\n");
 							}
 						} else {
-							System.out.println("Le numéro de ligne saisi ne se situe pas entre 1 et 8\n");
+							System.out.println("Le numï¿½ro de ligne saisi ne se situe pas entre 1 et 8\n");
 						}
 					} else {
-						System.out.println("Votre saisie ne contient pas 2 caractères\n");
+						System.out.println("Votre saisie ne contient pas 2 caractï¿½res\n");
 					}
 				}
 				
@@ -633,74 +633,74 @@ public class Plateau {
 
 			this.actualiserPortees();
 			
-			//---------------------Vérification que le déplacement saisi ne met pas son propre Roi en échec---------------------
+			//---------------------Vï¿½rification que le dï¿½placement saisi ne met pas son propre Roi en ï¿½chec---------------------
 			
 			/*
-			 * Idée générale de cette partie du code:
+			 * Idï¿½e gï¿½nï¿½rale de cette partie du code:
 			 * 
-			 * Si le Roi (avant le déplacement saisi) n'était pas en échec
-			 * MAIS QUE après avoir saisi un déplacement
-			 * le système se rend compte qu'il met son propre Roi en échec, 
-			 * ALORS on va demander au joueur de ressaisir un déplacement.
+			 * Si le Roi (avant le dï¿½placement saisi) n'ï¿½tait pas en ï¿½chec
+			 * MAIS QUE aprï¿½s avoir saisi un dï¿½placement
+			 * le systï¿½me se rend compte qu'il met son propre Roi en ï¿½chec, 
+			 * ALORS on va demander au joueur de ressaisir un dï¿½placement.
 			 * 
-			 * Comment faire un "retour en arrière après un déplacement" ?
+			 * Comment faire un "retour en arriï¿½re aprï¿½s un dï¿½placement" ?
 			 * 
-			 * On va créer un nouveau "Plateau" qui sera une copie conforme
+			 * On va crï¿½er un nouveau "Plateau" qui sera une copie conforme
 			 * du "Plateau" actuel, et c'est dans cette copie qu'on va faire
-			 * le déplacement (c'est une "simulation" !). Si dans cette
+			 * le dï¿½placement (c'est une "simulation" !). Si dans cette
 			 * simulation on se rend compte que le joueur met son propre
-			 * Roi en échec, alors on va demande au joueur de ressaisir 
-			 * un déplacement. SINON, on va faire le déplacement pour
+			 * Roi en ï¿½chec, alors on va demande au joueur de ressaisir 
+			 * un dï¿½placement. SINON, on va faire le dï¿½placement pour
 			 * de "vrai" dans le "vrai" "Plateau".
 			 * 
 			 */
 			
 			
-			if (this.findTheKing(c).enEchec(this)==false) { //Si le Roi n'est pas encore en échec (on ne s'est pas déplacé pour l'instant !!!!)
+			if (this.findTheKing(c).enEchec(this)==false) { //Si le Roi n'est pas encore en ï¿½chec (on ne s'est pas dï¿½placï¿½ pour l'instant !!!!)
 				
 				Plateau simulation = this.clone();
 				boolean hasMoveInSimulation=false;
 				simulation.actualiserPortees();
 				
 				
-				//-------------------Partie vérification que les coordonnées saisie de correspondent à un roque-------------------
+				//-------------------Partie vï¿½rification que les coordonnï¿½es saisie de correspondent ï¿½ un roque-------------------
 				
-				//On regarde qu'il s'agit d'un déplacement de 2 pièces (et pas d'une pièce dans une case vide par exemple)
+				//On regarde qu'il s'agit d'un dï¿½placement de 2 piï¿½ces (et pas d'une piï¿½ce dans une case vide par exemple)
 				if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece()!=null) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece()!=null)) {
 
-					//On vérifie d'abord que ce sont des pièces de même couleur (sinon ça serait un déplacement vers une pièce ennemie et non pas un roque)
+					//On vï¿½rifie d'abord que ce sont des piï¿½ces de mï¿½me couleur (sinon ï¿½a serait un dï¿½placement vers une piï¿½ce ennemie et non pas un roque)
 					if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece().getCouleurPiece().equals(c)) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().getCouleurPiece().equals(c))) {
 						
-						//(Si la case de départ contient un Roi et la case d'arrivée une Tour) OU (si la case de départ contient une Tour et la case d'arrivée un Roi)
+						//(Si la case de dï¿½part contient un Roi et la case d'arrivï¿½e une Tour) OU (si la case de dï¿½part contient une Tour et la case d'arrivï¿½e un Roi)
 						if (((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece() instanceof Tour) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece() instanceof Roi)) || ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece() instanceof Roi) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece() instanceof Tour))) {
 							
-							//On va maintenant séparer les deux conditons ci-dessus pour savoir auquel des deux conditions on a affaire:
+							//On va maintenant sï¿½parer les deux conditons ci-dessus pour savoir auquel des deux conditions on a affaire:
 							
-							//Ici c'est le cas où le joueur à saisit d'abord les coordonnées de sa Tour puis celle de son Roi
+							//Ici c'est le cas oï¿½ le joueur ï¿½ saisit d'abord les coordonnï¿½es de sa Tour puis celle de son Roi
 							if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece() instanceof Tour) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece() instanceof Roi)) {
 								
-								//On vérifie si les deux pièces ne ce sont jamais déplacées
+								//On vï¿½rifie si les deux piï¿½ces ne ce sont jamais dï¿½placï¿½es
 								if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece().isDejaDeplace()==false) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().isDejaDeplace()==false)) {
 									
-									//On doit maintenant, séparer les possibilités de roque selon la couleur de la pièce
+									//On doit maintenant, sï¿½parer les possibilitï¿½s de roque selon la couleur de la piï¿½ce
 									
-									//Donc si la couleur de la pièce est blanche
+									//Donc si la couleur de la piï¿½ce est blanche
 									if (c.equals(new Couleur("blanc"))) { 
 										
-										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ça on regarde la position de la Tour saisie (qui est sur sa position de départ car si on est dans cette partie du code, c'est qu'on a jamais déplacé sa Tour (en plus de son Roi)
+										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ï¿½a on regarde la position de la Tour saisie (qui est sur sa position de dï¿½part car si on est dans cette partie du code, c'est qu'on a jamais dï¿½placï¿½ sa Tour (en plus de son Roi)
 										
 										//Pour le grand roque (le Roi va VERS LA GAUCHE du point du vu du joueur blanc)
 										if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getColonne()==1) && (simulation.plateau[coordoXDepart-1][coordoYDepart-1].getLigne()==1)) {
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(2, 1)) && (simulation.estLibre(3, 1)) && (simulation.estLibre(4, 1))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(4, 1))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(3, 1))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													
 													//----Deplacement manuel pour le Roi----
@@ -716,23 +716,23 @@ public class Plateau {
 													this.actualiserPortees();
 													hasMove=true;
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}	
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}	
 										} else { //C'est donc ici le petit roque (le Roi va VERS LA DROITE du point de vu du joueur blanc)
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(6, 1)) && (simulation.estLibre(7, 1))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(6, 1))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(7, 1))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													//----Deplacement manuel pour le Roi----
 													this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().setLaCaseDeLaPiece(this.getCaseAtCoordo(7, 1)); 
@@ -749,29 +749,29 @@ public class Plateau {
 													
 													
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}
 										}
-									} else { //Donc si la couleur de la pièce est noire
+									} else { //Donc si la couleur de la piï¿½ce est noire
 										
-										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ça on regarde la position de la Tour saisie (qui est sur sa position de départ car si on est dans cette partie du code, c'est qu'on a jamais déplacé sa Tour (en plus de son Roi)
+										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ï¿½a on regarde la position de la Tour saisie (qui est sur sa position de dï¿½part car si on est dans cette partie du code, c'est qu'on a jamais dï¿½placï¿½ sa Tour (en plus de son Roi)
 										
 										//Pour le grand roque (le Roi va VERS LA GAUCHE du point du vu du joueur blanc)
 										if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getColonne()==1) && (simulation.plateau[coordoXDepart-1][coordoYDepart-1].getLigne()==8)) {
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(2, 8)) && (simulation.estLibre(3, 8)) && (simulation.estLibre(4, 8))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(4, 8))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(3, 8))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													
 													//----Deplacement manuel pour le Roi----
@@ -787,23 +787,23 @@ public class Plateau {
 													this.actualiserPortees();
 													hasMove=true;
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}	
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}	
 										} else { //C'est donc ici le petit roque (le Roi va VERS LA DROITE du point de vu du joueur blanc)
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(6, 8)) && (simulation.estLibre(7, 8))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(6, 8))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(7, 8))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													//----Deplacement manuel pour le Roi----
 													this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().setLaCaseDeLaPiece(this.getCaseAtCoordo(7, 8)); 
@@ -820,18 +820,18 @@ public class Plateau {
 													
 													
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}
 										}
 									}
-								} else { //Si on rentre dans le else ça veut dire que les pièces ont déjà bougé
-									System.out.println("Une des deux pièces (voir les deux) ont déjà été déplacé, le roque est donc impossible !\n");
+								} else { //Si on rentre dans le else ï¿½a veut dire que les piï¿½ces ont dï¿½jï¿½ bougï¿½
+									System.out.println("Une des deux piï¿½ces (voir les deux) ont dï¿½jï¿½ ï¿½tï¿½ dï¿½placï¿½, le roque est donc impossible !\n");
 								}
-							} else { //Et ici (dans le else) c'est donc le cas inverse, c'est-à-dire que le joueur à d'abord saisi les coordonnées de son Roi puis celle de sa Tour
+							} else { //Et ici (dans le else) c'est donc le cas inverse, c'est-ï¿½-dire que le joueur ï¿½ d'abord saisi les coordonnï¿½es de son Roi puis celle de sa Tour
 	
 								int tempXD=coordoXDepart;
 								int tempYD=coordoYDepart;
@@ -843,28 +843,28 @@ public class Plateau {
 								coordoXArrivee=tempXD;
 								coordoYArrivee=tempYD;
 								
-								//On vérifie si les deux pièces ne ce sont jamais déplacées
+								//On vï¿½rifie si les deux piï¿½ces ne ce sont jamais dï¿½placï¿½es
 								if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece().isDejaDeplace()==false) && (simulation.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().isDejaDeplace()==false)) {
 									
-									//On doit maintenant, séparer les possibilités de roque selon la couleur de la pièce
+									//On doit maintenant, sï¿½parer les possibilitï¿½s de roque selon la couleur de la piï¿½ce
 									
-									//Donc si la couleur de la pièce est blanche
+									//Donc si la couleur de la piï¿½ce est blanche
 									if (c.equals(new Couleur("blanc"))) { 
 										
-										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ça on regarde la position de la Tour saisie (qui est sur sa position de départ car si on est dans cette partie du code, c'est qu'on a jamais déplacé sa Tour (en plus de son Roi)
+										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ï¿½a on regarde la position de la Tour saisie (qui est sur sa position de dï¿½part car si on est dans cette partie du code, c'est qu'on a jamais dï¿½placï¿½ sa Tour (en plus de son Roi)
 										
 										//Pour le grand roque (le Roi va VERS LA GAUCHE du point du vu du joueur blanc)
 										if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getColonne()==1) && (simulation.plateau[coordoXDepart-1][coordoYDepart-1].getLigne()==1)) {
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(2, 1)) && (simulation.estLibre(3, 1)) && (simulation.estLibre(4, 1))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(4, 1))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(3, 1))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													
 													//----Deplacement manuel pour le Roi----
@@ -880,23 +880,23 @@ public class Plateau {
 													this.actualiserPortees();
 													hasMove=true;
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}	
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}	
 										} else { //C'est donc ici le petit roque (le Roi va VERS LA DROITE du point de vu du joueur blanc)
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(6, 1)) && (simulation.estLibre(7, 1))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(6, 1))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(7, 1))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													//----Deplacement manuel pour le Roi----
 													this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().setLaCaseDeLaPiece(this.getCaseAtCoordo(7, 1)); 
@@ -913,29 +913,29 @@ public class Plateau {
 													
 													
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}
 										}
-									} else { //Donc si la couleur de la pièce est noire
+									} else { //Donc si la couleur de la piï¿½ce est noire
 										
-										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ça on regarde la position de la Tour saisie (qui est sur sa position de départ car si on est dans cette partie du code, c'est qu'on a jamais déplacé sa Tour (en plus de son Roi)
+										//Ensuite on doit regarder si le joueur veut faire le "petit" ou le "grand" roque, pour ï¿½a on regarde la position de la Tour saisie (qui est sur sa position de dï¿½part car si on est dans cette partie du code, c'est qu'on a jamais dï¿½placï¿½ sa Tour (en plus de son Roi)
 										
 										//Pour le grand roque (le Roi va VERS LA GAUCHE du point du vu du joueur blanc)
 										if ((simulation.plateau[coordoXDepart-1][coordoYDepart-1].getColonne()==1) && (simulation.plateau[coordoXDepart-1][coordoYDepart-1].getLigne()==8)) {
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(2, 8)) && (simulation.estLibre(3, 8)) && (simulation.estLibre(4, 8))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(4, 8))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(3, 8))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													
 													//----Deplacement manuel pour le Roi----
@@ -951,23 +951,23 @@ public class Plateau {
 													this.actualiserPortees();
 													hasMove=true;
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}	
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}	
 										} else { //C'est donc ici le petit roque (le Roi va VERS LA DROITE du point de vu du joueur blanc)
 											
-											//On va maintenant vérifier que toutes les cases entre le Roi et la Tour sont libres
+											//On va maintenant vï¿½rifier que toutes les cases entre le Roi et la Tour sont libres
 											if ((simulation.estLibre(6, 8)) && (simulation.estLibre(7, 8))) {
 												
-												//On regarde maintenant si le Roi n'est pas en échec dans les cases par lesquelles il va "passer" pour roquer
+												//On regarde maintenant si le Roi n'est pas en ï¿½chec dans les cases par lesquelles il va "passer" pour roquer
 												if ((simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(6, 8))==false) && (simulation.findTheKing(c).enEchec(simulation, simulation.getCaseAtCoordo(7, 8))==false)) {
 													
-													//On a maintenant toutes les conditions nécéssaire pour faire le roque souhaité par le joueur
-													//On va devoir déplacer les pièces sans utiliser la méthode "deplacer" car celle-ci regarderait dans la Portee des pièces et dirait (avec raison) que le déplacement serait impossible
-													//On va faire le déplacement "à la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
+													//On a maintenant toutes les conditions nï¿½cï¿½ssaire pour faire le roque souhaitï¿½ par le joueur
+													//On va devoir dï¿½placer les piï¿½ces sans utiliser la mï¿½thode "deplacer" car celle-ci regarderait dans la Portee des piï¿½ces et dirait (avec raison) que le dï¿½placement serait impossible
+													//On va faire le dï¿½placement "ï¿½ la main" sur le "vrai" Plateau et pas notre simulation car on sait que tout est OK pour faire le roque pour de vrai
 													
 													//----Deplacement manuel pour le Roi----
 													this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece().setLaCaseDeLaPiece(this.getCaseAtCoordo(7, 8)); 
@@ -984,39 +984,39 @@ public class Plateau {
 													
 													
 													
-												} else { //Donc le roi est en échec dans une des cases par laquelle il doit "passer" pour roquer
-													System.out.println("Le roque est impossible car le Roi est en échec quand il passe sur les cases pour aller roquer !\n");
+												} else { //Donc le roi est en ï¿½chec dans une des cases par laquelle il doit "passer" pour roquer
+													System.out.println("Le roque est impossible car le Roi est en ï¿½chec quand il passe sur les cases pour aller roquer !\n");
 												}
-											} else { //Il y a des pièces entre le Roi et la Tour, le roque est donc impossible
-												System.out.println("Il y a des pièces entre le Roi et la Tour sélectionnée !\n");
+											} else { //Il y a des piï¿½ces entre le Roi et la Tour, le roque est donc impossible
+												System.out.println("Il y a des piï¿½ces entre le Roi et la Tour sï¿½lectionnï¿½e !\n");
 											}
 										}
 									}
-								} else { //Si on rentre dans le else ça veut dire que les pièces ont déjà bougé
-									System.out.println("Une des deux pièces (voir les deux) ont déjà été déplacé, le roque est donc impossible !\n");
+								} else { //Si on rentre dans le else ï¿½a veut dire que les piï¿½ces ont dï¿½jï¿½ bougï¿½
+									System.out.println("Une des deux piï¿½ces (voir les deux) ont dï¿½jï¿½ ï¿½tï¿½ dï¿½placï¿½, le roque est donc impossible !\n");
 								}
 							}	
-						} else { //Si on entre dans ce else cela veut dire que le joueur à saisi en case de départ et de destination des pièces de même couleur qui sont autre qu'une Tour et un Roi. OR il est interdit (sauf donc, l'exception du roque avec Roi et Tour) d'essayer de déplacer 2 pièces de même couleur.
-							System.out.println("Vous ne pouvez pas déplacer deux pièces de même couleur ! (Sauf pour le roque)\n");
+						} else { //Si on entre dans ce else cela veut dire que le joueur ï¿½ saisi en case de dï¿½part et de destination des piï¿½ces de mï¿½me couleur qui sont autre qu'une Tour et un Roi. OR il est interdit (sauf donc, l'exception du roque avec Roi et Tour) d'essayer de dï¿½placer 2 piï¿½ces de mï¿½me couleur.
+							System.out.println("Vous ne pouvez pas dï¿½placer deux piï¿½ces de mï¿½me couleur ! (Sauf pour le roque)\n");
 						}
-					} else { //On entre dans cette partie du code si les deux pièces saisie de sont pas de même couleur (le déplacement n'est pas un roque)
+					} else { //On entre dans cette partie du code si les deux piï¿½ces saisie de sont pas de mï¿½me couleur (le dï¿½placement n'est pas un roque)
 					
 						hasMoveInSimulation=simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece().deplacer(simulation.plateau[coordoXDepart-1][coordoYDepart-1], simulation.plateau[coordoXArrivee-1][coordoYArrivee-1], simulation);
 						simulation.actualiserPortees();
 	
-						if ((hasMoveInSimulation==true) && (simulation.findTheKing(c).enEchec(simulation)==true)) { //Si dans la simulation du déplacement on a pu se déplacer ET que le roi se met en échec	
-							System.out.println("Vous ne pouvez pas mettre votre propre Roi en échec ! Veuillez rejouer !\n");
+						if ((hasMoveInSimulation==true) && (simulation.findTheKing(c).enEchec(simulation)==true)) { //Si dans la simulation du dï¿½placement on a pu se dï¿½placer ET que le roi se met en ï¿½chec	
+							System.out.println("Vous ne pouvez pas mettre votre propre Roi en ï¿½chec ! Veuillez rejouer !\n");
 						} else {
 							if (hasMoveInSimulation==true) {
 								this.actualiserPortees();
 								int nbrPiecesAvantDeplacement=this.nbrPieceRestantes;
 								hasMove = plateau[coordoXDepart-1][coordoYDepart-1].getPiece().deplacer(plateau[coordoXDepart-1][coordoYDepart-1], plateau[coordoXArrivee-1][coordoYArrivee-1], this);
 									
-								if (hasMove==false) { //Si le déplacement ne s'est pas fait		
-									System.out.println("Déplacement impossible, veuillez rejouer !\n");			
+								if (hasMove==false) { //Si le dï¿½placement ne s'est pas fait		
+									System.out.println("Dï¿½placement impossible, veuillez rejouer !\n");			
 								} else {
 									//-----------------------------------------------------------------------------------------------------
-									//On regarde ici pour la promotionPion OU pour priseEnPassant, donc d'abord si la pièce déplacée est un Pion
+									//On regarde ici pour la promotionPion OU pour priseEnPassant, donc d'abord si la piï¿½ce dï¿½placï¿½e est un Pion
 									if (this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece() instanceof Pion) {
 										
 										if (c.equals(new Couleur("blanc"))) { //Si le pion est blanc
@@ -1074,29 +1074,29 @@ public class Plateau {
 									//-----------------------------------------------------------------------------------------------------
 								}
 							} else {
-								System.out.println("Déplacement impossible, veuillez rejouer !\n");
+								System.out.println("Dï¿½placement impossible, veuillez rejouer !\n");
 							}
 						
 						}
 					}	
-				} else { //On entre dans cette partie du code si les deux pièces saisie de sont pas de même couleur (le déplacement n'est pas un roque)
+				} else { //On entre dans cette partie du code si les deux piï¿½ces saisie de sont pas de mï¿½me couleur (le dï¿½placement n'est pas un roque)
 					
 					hasMoveInSimulation=simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece().deplacer(simulation.plateau[coordoXDepart-1][coordoYDepart-1], simulation.plateau[coordoXArrivee-1][coordoYArrivee-1], simulation);
 					simulation.actualiserPortees();
 
-					if ((hasMoveInSimulation==true) && (simulation.findTheKing(c).enEchec(simulation)==true)) { //Si dans la simulation du déplacement on a pu se déplacer ET que le roi se met en échec	
-						System.out.println("Vous ne pouvez pas mettre votre propre Roi en échec ! Veuillez rejouer !\n");
+					if ((hasMoveInSimulation==true) && (simulation.findTheKing(c).enEchec(simulation)==true)) { //Si dans la simulation du dï¿½placement on a pu se dï¿½placer ET que le roi se met en ï¿½chec	
+						System.out.println("Vous ne pouvez pas mettre votre propre Roi en ï¿½chec ! Veuillez rejouer !\n");
 					} else {
 						if (hasMoveInSimulation==true) {
 							this.actualiserPortees();	
 							int nbrPiecesAvantDeplacement=this.nbrPieceRestantes;
 							hasMove = plateau[coordoXDepart-1][coordoYDepart-1].getPiece().deplacer(plateau[coordoXDepart-1][coordoYDepart-1], plateau[coordoXArrivee-1][coordoYArrivee-1], this);
 								
-							if (hasMove==false) { //Si le déplacement ne s'est pas fait		
-								System.out.println("Déplacement impossible, veuillez rejouer !\n");			
+							if (hasMove==false) { //Si le dï¿½placement ne s'est pas fait		
+								System.out.println("Dï¿½placement impossible, veuillez rejouer !\n");			
 							} else {	
 								//-----------------------------------------------------------------------------------------------------
-								//On regarde ici pour la promotionPion OU pour priseEnPassant, donc d'abord si la pièce déplacée est un Pion
+								//On regarde ici pour la promotionPion OU pour priseEnPassant, donc d'abord si la piï¿½ce dï¿½placï¿½e est un Pion
 								if (this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece() instanceof Pion) {
 									
 									if (c.equals(new Couleur("blanc"))) { //Si le pion est blanc
@@ -1156,27 +1156,27 @@ public class Plateau {
 								//-----------------------------------------------------------------------------------------------------
 							}
 						} else {
-							System.out.println("Déplacement impossible, veuillez rejouer !\n");
+							System.out.println("Dï¿½placement impossible, veuillez rejouer !\n");
 						}
 					}
 				}
 			}
-			//---------------------Vérification de si on sort de la situation d'échec vécue par le Roi---------------------
+			//---------------------Vï¿½rification de si on sort de la situation d'ï¿½chec vï¿½cue par le Roi---------------------
 			
-			else if (this.findTheKing(c).enEchec(this)==true) { //On sait dans cette partie du code que le roi n'est pas en échec et mat mais simplement en échec donc il y a une solution possible
+			else if (this.findTheKing(c).enEchec(this)==true) { //On sait dans cette partie du code que le roi n'est pas en ï¿½chec et mat mais simplement en ï¿½chec donc il y a une solution possible
 				
 				Plateau simulation = this.clone();
 				boolean hasMoveInSimulation=false;
 				
 				hasMoveInSimulation = simulation.plateau[coordoXDepart-1][coordoYDepart-1].getPiece().deplacer(simulation.plateau[coordoXDepart-1][coordoYDepart-1], simulation.plateau[coordoXArrivee-1][coordoYArrivee-1], simulation);
 			
-				if ((hasMoveInSimulation==true) && (simulation.findTheKing(c).enEchec(simulation)==false)) { //Si dans la simulation du déplacement on a pu se déplacer ET que le roi n'est plus en échec
+				if ((hasMoveInSimulation==true) && (simulation.findTheKing(c).enEchec(simulation)==false)) { //Si dans la simulation du dï¿½placement on a pu se dï¿½placer ET que le roi n'est plus en ï¿½chec
 					int nbrPiecesAvantDeplacement=this.nbrPieceRestantes;
 					hasMove = plateau[coordoXDepart-1][coordoYDepart-1].getPiece().deplacer(plateau[coordoXDepart-1][coordoYDepart-1], plateau[coordoXArrivee-1][coordoYArrivee-1], this);
-					//Comment on sait que le déplacement permet de se sortir de la situation d'échec, alors on va pouvoir faire le déplacement sur le VRAI plateau de jeu (et pas dans une simulation)
+					//Comment on sait que le dï¿½placement permet de se sortir de la situation d'ï¿½chec, alors on va pouvoir faire le dï¿½placement sur le VRAI plateau de jeu (et pas dans une simulation)
 
 					//-----------------------------------------------------------------------------------------------------
-					//On regarde ici pour la promotionPion OU pour priseEnPassant, donc d'abord si la pièce déplacée est un Pion
+					//On regarde ici pour la promotionPion OU pour priseEnPassant, donc d'abord si la piï¿½ce dï¿½placï¿½e est un Pion
 					if (this.plateau[coordoXArrivee-1][coordoYArrivee-1].getPiece() instanceof Pion) {
 						
 						if (c.equals(new Couleur("blanc"))) { //Si le pion est blanc
@@ -1237,7 +1237,7 @@ public class Plateau {
 
 				} else {
 					
-					System.out.println("Le déplacement saisi ne permet pas de sortir de la situation d'échec, veuillez rejouer !\n");
+					System.out.println("Le dï¿½placement saisi ne permet pas de sortir de la situation d'ï¿½chec, veuillez rejouer !\n");
 				}
 			}
 		}

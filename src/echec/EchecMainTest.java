@@ -112,10 +112,10 @@ class EchecMainTest {
         // cette commande vérifie que le fou a été déplacé à la colonne 8
         
         
-        System.out.println(p1.findTheKing(new Couleur("blanc")).toString());
-        System.out.println(p1.findTheKing(new Couleur("noir")).toString());
-        p1.afficherCimetiere(new Couleur("blanc"));
-        p1.afficherCimetiere(new Couleur("noir"));
+        System.out.println(p1.findTheKing(new Couleur(Couleur.BLANC)).toString());
+        System.out.println(p1.findTheKing(new Couleur(Couleur.NOIR)).toString());
+        p1.afficherCimetiere(new Couleur(Couleur.BLANC));
+        p1.afficherCimetiere(new Couleur(Couleur.NOIR));
         System.out.println(p1.restePiecesBlanches());
         System.out.println(p1.restePiecesNoires());
         System.out.println(p1.choisirPromotion());
@@ -124,20 +124,20 @@ class EchecMainTest {
     
     @Test
     void testCouleur() {
-        Couleur leBlanc = new Couleur("blanc");
-        Couleur leNoir = new Couleur("noir");
+        Couleur leBlanc = new Couleur(Couleur.BLANC);
+        Couleur leNoir = new Couleur(Couleur.NOIR);
         Couleur laMauvaise = new Couleur("jaune");
         Couleur aVerifier1 = new Couleur(leBlanc.invertionCouleur().getCouleur());
         Couleur aVerifier2 = new Couleur(leNoir.invertionCouleur().getCouleur());
         Couleur aSet = new Couleur("test");
-        aSet.setCouleur("blanc");
+        aSet.setCouleur(Couleur.BLANC);
         System.out.println("laMauvaise: "+laMauvaise+", aVerifier1: "+aVerifier1+", aVerifier2: "+aVerifier2);
         assertEquals(aVerifier1.getCouleur(),leNoir.getCouleur());
     }
     
     @Test
     void testCase() {
-        Case laCase = new Case (1,1,"noir");
+        Case laCase = new Case (1,1,Couleur.NOIR);
         Case laCaseClone = laCase.clone();
         assertEquals(laCase.getColonne(), laCaseClone.getColonne());
     }
@@ -174,15 +174,15 @@ class EchecMainTest {
         lePl.actualiserPortees();
         lePl.getCaseAtCoordo(5, 4).getPiece().deplacer(lePl.getCaseAtCoordo(5, 4), lePl.getCaseAtCoordo(5, 5), lePl); //On déplace le Roi situé en e4 en e5
         lePl.actualiserPortees();
-        assertEquals(lePl.findTheKing(new Couleur("blanc")).enEchec(lePl),false); //On va chercher le Roi blanc (celui qu'on a déplacé juste avant) et on regarde si il est en échec sur sa case actuelle.
+        assertEquals(lePl.findTheKing(new Couleur(Couleur.BLANC)).enEchec(lePl),false); //On va chercher le Roi blanc (celui qu'on a déplacé juste avant) et on regarde si il est en échec sur sa case actuelle.
     }
     
     @Test
     void testPartie() {
         Plateau echiquier = new Plateau();
         echiquier.actualiserPortees();
-        echiquier.saisirDeplacement(new Couleur("blanc"));
-        echiquier.saisirDeplacement(new Couleur("noir"));
+        echiquier.saisirDeplacement(new Couleur(Couleur.BLANC));
+        echiquier.saisirDeplacement(new Couleur(Couleur.NOIR));
     }
   
 }

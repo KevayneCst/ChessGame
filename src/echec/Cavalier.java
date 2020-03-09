@@ -9,13 +9,13 @@ public class Cavalier extends Piece {
 	
 	//------------------------------------CALCULER PORTEE----------------------------------------------------
 	/*	
-	 * 		La portée contient un tableau de Case où la Piece peut se deplacer.
-	 * 		CalculerPortee remplit ce tableau de Case en respectant les règles
-	 * 		de déplacement de la Piece et en prenant en compte l'état du plateau.	
+	 * 		La portÃ©e contient un tableau de Case oÃ¹ la Piece peut se deplacer.
+	 * 		CalculerPortee remplit ce tableau de Case en respectant les rÃ¨gles
+	 * 		de dÃ©placement de la Piece et en prenant en compte l'Ã©tat du plateau.	
 	 * 
-	 * 		Spécificité Cavalier:
-	 * 		-Se déplace en "L"
-	 * 		-Peut "sauter" au dessus d'autres pièces
+	 * 		SpÃ©cificitÃ© Cavalier:
+	 * 		-Se dÃ©place en "L"
+	 * 		-Peut "sauter" au dessus d'autres piÃ¨ces
 	 * 	*/
 	
 		@Override
@@ -27,39 +27,39 @@ public class Cavalier extends Piece {
 		
 			
 			/**
-			 * Méthode écrite par Eloïse
+			 * MÃ©thode Ã©crite par Eloï¿½se
 			 * 
 			 * 
-			 * MAJ de la méthode:
+			 * MAJ de la mÃ©thode:
 			 * 
 			 * Pareil que pour la classe Roi, on a
-			 * pas besoin de comparer/connaître la
+			 * pas besoin de comparer/connaÃ®tre la
 			 * couleur de notre cavalier pour nos 
-			 * déplacements car il n'a pas de sens
-			 * "unique" de déplacement comme le 
+			 * dÃ©placements car il n'a pas de sens
+			 * "unique" de dÃ©placement comme le 
 			 * pion
 			 * 
 			 * 
-			 * MAJ de la méthode:
+			 * MAJ de la mÃ©thode:
 			 * 
 			 * La cavalier ne fait pas X+2 et Y+3 mais X+2 Y+1
 			 * ==> Le cavalier "saute" au dessus de 3 cases au
-			 * total et pas 5 cases... Même chose pour le reste
-			 * des déplacements du cavalier, pas X-2 et Y+3 mais
+			 * total et pas 5 cases... MÃªme chose pour le reste
+			 * des dÃ©placements du cavalier, pas X-2 et Y+3 mais
 			 * X-2 et Y+1 etc
 			 * 
 			 * 
-			 * MAJ de la méthode:
+			 * MAJ de la mÃ©thode:
 			 * 
-			 * Il manquait le fait d'ajouter dans la portée la case d'une 
-			 * pièce d'une autre couleur si la case n'était pas libre
+			 * Il manquait le fait d'ajouter dans la portÃ©e la case d'une 
+			 * piÃ¨ce d'une autre couleur si la case n'Ã©tait pas libre
 			 * (pour pouvoir la manger plus tard)
 			 * 
 			 */
 			
 			//Pour y=+-2 ou 1 ET x=+-2 ou 1 
 		
-			//le cheval avance et va à droite : X+1 Y+2
+			//le cheval avance et va Ã  droite : X+1 Y+2
 			if ((simulationCoordoX+1 <= 8) && (simulationCoordoY+2 <= 8)) { 
 				if (plateau.estLibre(simulationCoordoX+1,simulationCoordoY+2) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX+1, simulationCoordoY+2);
@@ -70,7 +70,7 @@ public class Cavalier extends Piece {
 				}
 			}
 			
-			//le cheval va à droite puis avance : X+2 Y+1
+			//le cheval va Ã  droite puis avance : X+2 Y+1
 			if ((simulationCoordoX+2 <= 8) && (simulationCoordoY+1 <= 8)) { 
 				if (plateau.estLibre(simulationCoordoX+2,simulationCoordoY+1) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX+2, simulationCoordoY+1);
@@ -81,7 +81,7 @@ public class Cavalier extends Piece {
 				}
 			}
 			
-			//le cheval va à droite puis recule : X+2 Y-1
+			//le cheval va Ã  droite puis recule : X+2 Y-1
 			if ((simulationCoordoX+2 <= 8) && (simulationCoordoY-1 >= 1)) { 
 				if (plateau.estLibre(simulationCoordoX+2,simulationCoordoY-1) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX+2, simulationCoordoY-1);
@@ -92,7 +92,7 @@ public class Cavalier extends Piece {
 				}
 			}
 			
-			//le cheval recule et va à droite : X+1 Y-2
+			//le cheval recule et va Ã  droite : X+1 Y-2
 			if ((simulationCoordoX+1 <= 8) && (simulationCoordoY-2 >= 1)) { 
 				if (plateau.estLibre(simulationCoordoX+1,simulationCoordoY-2) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX+1, simulationCoordoY-2);
@@ -104,7 +104,7 @@ public class Cavalier extends Piece {
 			}
 			
 		
-			//le cheval recule et va à gauche : X-1 Y-2
+			//le cheval recule et va Ã  gauche : X-1 Y-2
 			if ((simulationCoordoX-1 >= 1) && (simulationCoordoY-2 >= 1)) { 
 				if (plateau.estLibre(simulationCoordoX-1,simulationCoordoY-2) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX-1, simulationCoordoY-2);
@@ -115,7 +115,7 @@ public class Cavalier extends Piece {
 				}
 			}
 			
-			//le cheval va à gauche puis recule : X-2 Y-1
+			//le cheval va Ã  gauche puis recule : X-2 Y-1
 			if ((simulationCoordoX-2 >= 1) && (simulationCoordoY-1 >= 1)) { 
 				if (plateau.estLibre(simulationCoordoX-2, simulationCoordoY-1) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX-2, simulationCoordoY-1);
@@ -126,7 +126,7 @@ public class Cavalier extends Piece {
 				}
 			}
 			
-			//le cheval va à gauche puis avance : X-2 Y+1
+			//le cheval va Ã  gauche puis avance : X-2 Y+1
 			if ((simulationCoordoX-2 >= 1) && (simulationCoordoY+1 <= 8)) { 
 				if (plateau.estLibre(simulationCoordoX-2, simulationCoordoY+1) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX-2, simulationCoordoY+1);
@@ -137,7 +137,7 @@ public class Cavalier extends Piece {
 				}
 			}
 			
-			//le cheval avance et va à gauche : X-1 Y+2
+			//le cheval avance et va Ã  gauche : X-1 Y+2
 			if ((simulationCoordoX-1 >= 1) && (simulationCoordoY+2 <= 8)) { 
 				if (plateau.estLibre(simulationCoordoX-1,simulationCoordoY+2) == true) { 
 					Case c1 = plateau.getCaseAtCoordo(simulationCoordoX-1, simulationCoordoY+2);
